@@ -1,30 +1,20 @@
-import { ReactNode, createContext, useState } from "react";
+import { ReactNode, createContext } from "react";
 
-import { HOME_PATH } from "../routes/const";
+import { Difficulty } from "../api/quizApi";
 import { useLocalStorage } from "../hooks/useLocalStorage";
-import { useNavigate } from "react-router-dom";
-
-type User = {
-  name: string;
-  email: string;
-};
 
 type UserContextType = {
-  user: User | null;
-  isLoggedIn: boolean;
-  setUser: React.Dispatch<React.SetStateAction<User | null>>;
-  handleLogout: () => void;
-  handleLogin: (user: User) => void;
-  userObject: string;
+  difficulty: Difficulty;
+  category: string;
+  setCategory: (category: string) => void;
+  setDifficulty: (difficulty: string) => void;
 };
 
 const UserContext = createContext<UserContextType>({
-  user: null,
-  isLoggedIn: false,
-  setUser: () => {},
-  handleLogout: () => {},
-  handleLogin: () => {},
-  userObject: "",
+  difficulty: Difficulty.easy,
+  setDifficulty: () => {},
+  category: "9",
+  setCategory: () => {},
 });
 
 type UserProviderProps = {
@@ -32,38 +22,16 @@ type UserProviderProps = {
 };
 
 const UserProvider = ({ children }: UserProviderProps) => {
-  const [user, setUser] = useLocalStorage<User | null>("userObject", null);
-  const [userObject, setUserObject] = useState<User | null>(null);
-  const navigate = useNavigate();
-  const isLoggedIn = !!user;
-
-  if (!userObject) {
-    const storage = JSON.parse(localStorage.getItem("userObject") || "{}") as User | null;
-    if (storage !== null) {
-      setUserObject(storage);
-    }
-  }
-
-  const handleLogout = () => {
-    setUser(null);
-    setUserObject(null);
-    navigate(HOME_PATH);
-  };
-
-  const handleLogin = (user: User) => {
-    setUserObject(user);
-    setUser(user);
-  };
+  const [difficulty, setDifficulty] = useLocalStorage<Difficulty>("difficulty", Difficulty.easy);
+  const [category, setCategory] = useLocalStorage<string>("category", "9");
 
   return (
     <UserContext.Provider
       value={{
-        user,
-        isLoggedIn,
-        setUser,
-        handleLogout,
-        handleLogin,
-        userObject: JSON.stringify(userObject),
+        difficulty,
+        setDifficulty: (difficulty: string) => setDifficulty(difficulty as Difficulty),
+        category,
+        setCategory,
       }}>
       {children}
     </UserContext.Provider>

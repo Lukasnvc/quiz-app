@@ -1,12 +1,9 @@
 import { Route, Routes as RoutesWrapper } from "react-router-dom";
-import { authLayout, mainLayout } from "./const";
 
-import { UserContext } from "../context/UserContext";
-import { useContext } from "react";
+import { mainLayout } from "./const";
 
 const AllRoutes = () => {
-  const { isLoggedIn } = useContext(UserContext);
-  const { Layout, routes } = isLoggedIn ? mainLayout : authLayout;
+  const { Layout, routes } = mainLayout;
   return (
     <RoutesWrapper>
       {routes.map(({ path, Component }) => (
