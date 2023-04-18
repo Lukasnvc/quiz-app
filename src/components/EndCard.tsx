@@ -1,0 +1,112 @@
+import { greyColor, violetDark } from "../consts/colors";
+
+import { AnswerObject } from "../pages/quiz/Quiz";
+import { FaCheck } from "react-icons/fa";
+import { ImCross } from "react-icons/im";
+import styled from "styled-components";
+
+type Props = {
+  summary: AnswerObject[];
+  score: number;
+};
+
+const EndCard = ({ summary, score }: Props) => {
+  function decodeHtml(html: any) {
+    const doc = new DOMParser().parseFromString(html, "text/html");
+    return doc.documentElement.textContent;
+  }
+  function title(points: number) {
+    if (points === 0) {
+      return "Sad ...";
+    }
+    if (points > 0 && points <= 4) {
+      return "Could do better";
+    }
+    if (points > 4 && points <= 6) {
+      return "Not bad";
+    }
+    if (points > 6 && points <= 8) {
+      return "Good job!";
+    }
+    if (points > 8) {
+      return "Excellent!";
+    }
+  }
+
+  return (
+    <Wrapper>
+      <h3>
+        Scored {score} / 10 {title(score)}
+      </h3>
+      {summary.map((answer) => (
+        <div key={answer.answer}>
+          <p>{decodeHtml(answer.question)}</p>
+
+          {answer.correct ? (
+            <Correct>
+              <FaCheck />
+              <span>{decodeHtml(answer.answer)}</span>
+            </Correct>
+          ) : (
+            <InCorrect>
+              <span>
+                {" "}
+                <ImCross />
+                {decodeHtml(answer.answer)}
+              </span>
+              <p>Correct answer : {decodeHtml(answer.correctAnswer)}</p>
+            </InCorrect>
+          )}
+        </div>
+      ))}
+    </Wrapper>
+  );
+};
+
+export default EndCard;
+
+const Wrapper = styled.div`
+  background-color: ${greyColor};
+  max-width: 80vw;
+  max-height: 60vh;
+  padding: 10px;
+  border-radius: 5px;
+  overflow-y: scroll;
+  h3 {
+    text-align: center;
+    color: ${violetDark};
+  }
+  div {
+    border-bottom: 1px solid ${violetDark};
+  }
+  p {
+    font-size: 0.7rem;
+    text-align: center;
+  }
+  span {
+    font-size: 0.6rem;
+  }
+`;
+
+const Correct = styled.div`
+  text-align: center;
+  color: #59bc86;
+  svg {
+    margin-right: 10px;
+  }
+`;
+const InCorrect = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  span {
+    color: #a30000;
+  }
+  svg {
+    margin-right: 10px;
+  }
+  p {
+    font-size: 0.6rem;
+  }
+`;

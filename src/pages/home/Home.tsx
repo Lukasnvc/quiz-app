@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
-import { greyColor, mainShadow, violetDark } from "../../consts/colors";
+import { greyColor, mainShadow, violetDark, violetLight } from "../../consts/colors";
 
+import { AiFillGithub } from "react-icons/ai";
 import Button from "../../components/Button";
 import Logo from "../../consts/logo.png";
 import { QUIZ_PATH } from "../../routes/const";
@@ -46,16 +47,48 @@ const Home = () => {
           <option value="12">MUSIC</option>
           <option value="15">VIDEO GAMES</option>
           <option value="20">MYTHOLOGY</option>
+          <option value="10">BOOKS</option>
+          <option value="17">SCIENCE & NATURE</option>
+          <option value="18">COMPUTERS</option>
         </select>
         <Button type="submit" isViolet={true}>
           START
         </Button>
       </StyledForm>
+      <Footer>
+        <p>Made by Lukas</p>
+        <a href="https://github.com/Lukasnvc/quiz-app.git" target="blank">
+          <AiFillGithub />
+        </a>
+      </Footer>
     </Wrapper>
   );
 };
 
 export default Home;
+
+const Footer = styled.div`
+  position: absolute;
+  bottom: 20px;
+  display: flex;
+  align-items: center;
+  color: ${violetLight};
+  p {
+    font-size: 0.5rem;
+    margin-right: 10px;
+  }
+  a {
+    text-decoration: none;
+    color: ${violetLight};
+    svg {
+      font-size: 1.2rem;
+      cursor: pointer;
+      &:hover {
+        color: ${greyColor};
+      }
+    }
+  }
+`;
 
 const StyledLogo = styled.img`
   width: 200px;
@@ -63,8 +96,9 @@ const StyledLogo = styled.img`
 `;
 
 const Wrapper = styled.div`
+  position: relative;
   max-width: 1000px;
-  height: 80vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -74,7 +108,7 @@ const Wrapper = styled.div`
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
-  margin-bottom: 20%;
+  margin-bottom: 30%;
 
   label {
     color: #ffffff;

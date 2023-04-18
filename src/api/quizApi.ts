@@ -22,7 +22,6 @@ export const fetchQuestions = async (
   difficulty: string,
   category: string
 ): Promise<QuestionState[]> => {
-  console.log(category);
   const endpoint = `https://opentdb.com/api.php?amount=10&difficulty=${difficulty}&type=multiple&category=${category}`;
   const response = await axios.get(endpoint);
   const { results } = response.data;

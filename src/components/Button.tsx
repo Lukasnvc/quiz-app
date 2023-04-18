@@ -25,8 +25,12 @@ const StyledButton = styled.button<{ isViolet?: boolean }>`
   background-color: ${(props) => (props.isViolet ? `${violetLight}` : `${greyColor}`)};
   color: ${(props) => (props.isViolet ? "white" : "black")};
   border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 5px 15px;
   border-radius: 5px;
   cursor: pointer;
+  font-family: "Mochiy Pop One", sans-serif;
   box-shadow: ${mainShadow};
 `;
