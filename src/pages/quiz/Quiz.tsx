@@ -6,6 +6,7 @@ import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import EndCard from "../../components/EndCard";
 import { HOME_PATH } from "../../routes/const";
 import QuestionCard from "../../components/QuestionCard";
+import { RotatingLines } from "react-loader-spinner";
 import { UserContext } from "../../context/UserContext";
 import { VscDebugRestart } from "react-icons/vsc";
 import styled from "styled-components";
@@ -59,7 +60,7 @@ const Quiz = () => {
 
   return (
     <Wrapper>
-      {!gameOver && (
+      {!gameOver && !isLoading ? (
         <CountdownCircleTimer
           size={140}
           key={key}
@@ -70,7 +71,7 @@ const Quiz = () => {
           colorsTime={[7, 5, 2, 0]}>
           {({ remainingTime }) => <Time>{remainingTime}</Time>}
         </CountdownCircleTimer>
-      )}
+      ) : null}
       {!gameOver ? (
         <Score>
           <p>DIFFICULTY : {difficulty}</p>
@@ -94,7 +95,13 @@ const Quiz = () => {
           ) : null}
         </>
       ) : (
-        <h3>Loading questions ...</h3>
+        <RotatingLines
+          strokeColor={violetDark}
+          strokeWidth="5"
+          animationDuration="0.75"
+          width="150"
+          visible={true}
+        />
       )}
       {!gameOver &&
       !isLoading &&

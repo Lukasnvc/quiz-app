@@ -15,9 +15,29 @@ const EndCard = ({ summary, score }: Props) => {
     const doc = new DOMParser().parseFromString(html, "text/html");
     return doc.documentElement.textContent;
   }
+  function title(points: number) {
+    if (points === 0) {
+      return "Sad ...";
+    }
+    if (points > 0 && points <= 4) {
+      return "Could do better";
+    }
+    if (points > 4 && points <= 6) {
+      return "Not bad";
+    }
+    if (points > 6 && points <= 8) {
+      return "Good job!";
+    }
+    if (points > 8) {
+      return "Excellent!";
+    }
+  }
+
   return (
     <Wrapper>
-      <h3>Scored {score} / 10</h3>
+      <h3>
+        Scored {score} / 10 {title(score)}
+      </h3>
       {summary.map((answer) => (
         <div key={answer.answer}>
           <p>{decodeHtml(answer.question)}</p>
